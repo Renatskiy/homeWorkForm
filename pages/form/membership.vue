@@ -10,6 +10,7 @@
           :title="item.type"
         />
       </div>
+      <div>{{ description.description }}</div>
     </div>
   </FormWrapper>
 </template>
@@ -31,13 +32,21 @@ const formModuleStore = namespace('modules/formModule')
 export default class MemberShip extends Vue {
   @formModuleStore.State
   public formState!: FieldsInterface
+  @formModuleStore.Mutation('CHANGE_MEMBERSHIP') CHANGE_MEMBERSHIP!: (
+    type: string
+  ) => void
 
   changeMemberShip(title: string) {
     console.log(title)
+    this.CHANGE_MEMBERSHIP(title)
   }
 
   get memberShipsArray() {
     return memberShips
+  }
+
+  get description() {
+    return memberShips.find((x) => x.type === this.formState.membership)
   }
 }
 </script>

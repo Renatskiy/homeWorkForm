@@ -1,5 +1,6 @@
 export interface FieldsInterface {
   formFields: TextField[]
+  membership: string
 }
 
 export interface TextField {

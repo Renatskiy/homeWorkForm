@@ -75,6 +75,11 @@ export default class Form extends VuexModule {
     const res = this.formState.formFields.filter((x) => x.id !== id)
     this.formState.formFields = res
   }
+  @Mutation
+  CHANGE_MEMBERSHIP(type: string) {
+    console.log('CHANGE_MEMBERSHIP')
+    this.formState.membership = type
+  }
 
   get availablePhoneTypes(): Array<string> {
     const userPhoneTipes = this.formState.formFields

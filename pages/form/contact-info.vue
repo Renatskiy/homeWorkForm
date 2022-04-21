@@ -44,18 +44,18 @@ export default class ContactInfo extends Vue {
   @formModuleStore.State
   public formState!: FieldsInterface
 
-  @formModuleStore.Mutation('SET_FIELD_VALUE') SET_FIELD_VALUE: (payload: {
+  @formModuleStore.Mutation('SET_FIELD_VALUE') SET_FIELD_VALUE!: (payload: {
     field: string[]
     value: string
   }) => void
   @formModuleStore.Mutation('SET_PHONE_SELECTOR')
-  SET_PHONE_SELECTOR: (payload: { id: number; selector: string }) => void
+  SET_PHONE_SELECTOR!: (payload: { id: number; selector: string }) => void
 
   @formModuleStore.Mutation('ADD_PHONE_FIELD')
-  ADD_PHONE_FIELD: (type: string) => void
+  ADD_PHONE_FIELD!: (type: string) => void
 
   @formModuleStore.Mutation('DELETE_PHONE_FIELD')
-  DELETE_PHONE_FIELD: (id: number | string) => void
+  DELETE_PHONE_FIELD!: (id: number | string) => void
 
   @formModuleStore.Getter
   public availablePhoneTypes: any
