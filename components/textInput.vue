@@ -4,8 +4,8 @@
     <div>
       <slot> </slot>
       <input
+        @input="$emit('input', $event.target.value)"
         class="input"
-        @input="$emit('emitEvent', $event.target.value)"
         :type="type"
         :value="value"
       />

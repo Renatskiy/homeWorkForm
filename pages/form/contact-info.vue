@@ -3,20 +3,25 @@
     <div>
       <h1>ContactInfo</h1>
       <component
-        @click.native="setInputTitle(input.title)"
-        @emitEvent="emitEvent"
+        @change="changeSelectValue($event, input.id)"
+        @input="emitEvent($event, input.id)"
+        @deletePhoneItem="deletePhoneItem"
         :is="input.type"
         v-for="(input, index) in formState.formFields"
         v-bind="input"
+        :title="input.title"
+        :disableDeleteButton="disableDeleteButton"
+        :selectOptions="availablePhoneTypes"
+        :selectValue="input.phoneType"
       >
       </component>
-      <b-button
-        @click="$router.push({ name: 'form-membership' })"
-        block
-        variant
-        variant="outline-primary"
-        >Continue</b-button
+      <p
+        v-if="availablePhoneTypes.length"
+        @click="addPhoneField"
+        class="add-phone-btn"
       >
+        + Add phone
+      </p>
     </div>
   </FormWrapper>
 </template>
@@ -37,21 +42,45 @@ export default class ContactInfo extends Vue {
   public inputTitle: string = 'textInput'
 
   @formModuleStore.State
-  public formState: FieldsInterface
+  public formState!: FieldsInterface
 
   @formModuleStore.Mutation('SET_FIELD_VALUE') SET_FIELD_VALUE: (payload: {
     field: string[]
     value: string
   }) => void
+  @formModuleStore.Mutation('SET_PHONE_SELECTOR')
+  SET_PHONE_SELECTOR: (payload: { id: number; selector: string }) => void
+
+  @formModuleStore.Mutation('ADD_PHONE_FIELD')
+  ADD_PHONE_FIELD: (type: string) => void
+
+  @formModuleStore.Mutation('DELETE_PHONE_FIELD')
+  DELETE_PHONE_FIELD: (id: number | string) => void
+
+  @formModuleStore.Getter
+  public availablePhoneTypes: any
 
   setInputTitle(type: string) {
-    console.log(this.inputTitle)
     this.inputTitle = type
   }
+  get disableDeleteButton() {
+    const phones = this.formState.formFields.filter((item) => item.phone)
+    return phones.length < 2
+  }
 
-  emitEvent(data: string): void {
-    const payload = { field: this.inputTitle, value: data }
+  emitEvent(data: string, id: number): void {
+    const payload = { field: id, value: data }
     this.SET_FIELD_VALUE(payload)
+  }
+  changeSelectValue(event: string, id: number): void {
+    const payload = { id, selector: event }
+    this.SET_PHONE_SELECTOR(payload)
+  }
+  addPhoneField() {
+    this.ADD_PHONE_FIELD(this.availablePhoneTypes[0])
+  }
+  deletePhoneItem(id: number | string) {
+    this.DELETE_PHONE_FIELD(id)
   }
 }
 </script>
