@@ -19,7 +19,11 @@ export default class InputdWithSelect extends Vue {
 }
 </script>
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+input[type='radio'],
+input[type='checkbox'] {
+  color: red;
+}
+
 .checkbox-wraper {
   display: flex;
   justify-content: flex-start;
@@ -28,13 +32,16 @@ export default class InputdWithSelect extends Vue {
   padding-bottom: 30px;
 }
 .checkbox {
-  width: 45px;
-  height: 45px;
+  width: 32px;
+  height: 32px;
   border-radius: 8px;
   border: 2px solid #c8d3db;
 }
+.checkbox:checked {
+  color: red;
+}
 .title {
-  font: normal normal normal 18px/24px Roboto;
+  font: normal normal normal 18px/24px;
   color: #394556;
   margin-left: 20px;
   display: inline-block;

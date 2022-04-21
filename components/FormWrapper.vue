@@ -1,6 +1,6 @@
 <template>
   <div class="FormWrapper">
-    <nav class="routing_wrapper">
+    <nav class="routing_wrapper" v-if="showCred">
       <div
         :class="route.class"
         v-for="(route, index) in RoutePages"
@@ -17,7 +17,7 @@
     <div class="form-wrapper">
       <slot />
       <b-button
-        v-if="CurrentPage.index !== 2"
+        v-if="CurrentPage.index !== 2 && showCred"
         @click="changeRoute('forward')"
         block
         variant
@@ -25,7 +25,7 @@
         >Continue</b-button
       >
       <b-button
-        v-if="CurrentPage.index !== 0"
+        v-if="CurrentPage.index !== 0 && showCred"
         @click="changeRoute()"
         block
         variant
@@ -37,7 +37,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Vue, Prop } from 'vue-property-decorator'
 import { AuthPages } from '../constants/AuthPages'
 import { namespace } from 'vuex-class'
 import { FieldsInterface } from '../Interfaces/formInterace'
@@ -45,6 +45,8 @@ import { FieldsInterface } from '../Interfaces/formInterace'
 const formModuleStore = namespace('modules/formModule')
 @Component
 export default class FormWrapper extends Vue {
+  @Prop({ default: true }) showCred!: boolean
+
   @formModuleStore.State
   public formState!: FieldsInterface
 
@@ -74,7 +76,25 @@ export default class FormWrapper extends Vue {
 }
 </script>
 
-<style scoped lang="css">
+<style lang="css">
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;500&display=swap');
+
+body {
+  font-family: 'Open Sans';
+}
+body a {
+  color: #007bff;
+  cursor: pointer;
+}
+a:not([href]):not([class]) {
+  color: #007bff;
+}
+a:hover {
+  color: #007bff;
+}
+h3 {
+  color: #007bff;
+}
 .container {
   background: #ebebeb;
   opacity: 1;

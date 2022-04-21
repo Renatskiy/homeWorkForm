@@ -22,7 +22,6 @@ export default class Field extends Vue {
 }
 </script>
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 .filed-wrapper {
   display: flex;
   flex-direction: column;
@@ -31,7 +30,6 @@ export default class Field extends Vue {
   position: relative;
 }
 .title {
-  font: normal normal normal 18px/24px Roboto;
   color: #394556;
   margin-bottom: 10px;
 }
@@ -45,6 +43,6 @@ export default class Field extends Vue {
   margin-bottom: 20px;
   padding: 5px;
   box-sizing: border-box;
-  font: normal normal normal 18px/24px Roboto;
+  font-size: normal;
 }
 </style>

@@ -1,7 +1,8 @@
 <template>
-  <FormWrapper>
+  <FormWrapper :showCred="showCred">
     <div>
-      <h1>ContactInfo</h1>
+      <h3 v-if="showCred">ContactInfo</h3>
+      <h3 v-else>Edit information</h3>
       <component
         @change="changeSelectValue($event, input.id)"
         @input="emitEvent($event, input.id)"
@@ -13,22 +14,23 @@
         :disableDeleteButton="disableDeleteButton"
         :selectOptions="availablePhoneTypes"
         :selectValue="input.phoneType"
+        :showCred="showCred"
       >
       </component>
-      <p
-        v-if="availablePhoneTypes.length"
+      <a
+        v-if="availablePhoneTypes.length && showCred"
         @click="addPhoneField"
         class="add-phone-btn"
       >
         + Add phone
-      </p>
+      </a>
     </div>
   </FormWrapper>
 </template>
 
 <script lang="ts">
 import FormWrapper from '../../components/FormWrapper.vue'
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Vue, Prop } from 'vue-property-decorator'
 import { namespace } from 'vuex-class'
 import { FieldsInterface } from '../../Interfaces/formInterace'
 import TextInput from '../../components/textInput.vue'
@@ -39,6 +41,8 @@ const formModuleStore = namespace('modules/formModule')
   components: { FormWrapper, TextInput },
 })
 export default class ContactInfo extends Vue {
+  @Prop({ default: true }) showCred!: boolean
+
   public inputTitle: string = 'textInput'
 
   @formModuleStore.State
@@ -96,5 +100,8 @@ export default class ContactInfo extends Vue {
   height: 718px;
   box-shadow: 0px 3px 18px #00000029;
   background: #ffffff;
+}
+.add-phone-btn:hover {
+  text-decoration: none;
 }
 </style>

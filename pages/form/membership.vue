@@ -1,7 +1,7 @@
 <template>
   <FormWrapper>
     <div class="memberShip__wrapper">
-      <h1>MemberShip</h1>
+      <h3>MemberShip</h3>
       {{ formState.membership }}
       <div v-for="(item, index) in memberShipsArray">
         <ChekboxInput

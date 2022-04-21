@@ -24,7 +24,7 @@
         <option :value="innerSelectorValue">{{ selectValue }}</option>
       </select>
     </textInput>
-    <div class="button_wrapper">
+    <div class="button_wrapper" v-if="showCred">
       <button
         :disabled="disableDeleteButton"
         class="button_delete"
@@ -50,6 +50,7 @@ export default class InputdWithSelect extends Vue {
   @Prop({ default: () => [] }) selectOptions!: string[]
   @Prop({ default: '' }) value!: string
   @Prop({ required: false, default: 0 }) id!: number
+  @Prop({ default: true }) showCred!: boolean
 
   innerSelectorValue = this.selectValue
 
@@ -64,7 +65,6 @@ export default class InputdWithSelect extends Vue {
 }
 </script>
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 .select {
   position: absolute;
   width: 105px;
@@ -72,9 +72,9 @@ export default class InputdWithSelect extends Vue {
   background: #eeeeee 0% 0% no-repeat padding-box;
   border: 2px solid #c8d3db;
   border-radius: 8px 0px 0px 8px;
-  padding: 12px 20px;
+  padding: 7px 10px;
   box-sizing: border-box;
-  font: normal normal normal 16px/21px Roboto;
+  font-size: normal;
   color: #394556;
 }
 .inputWrapper {
@@ -86,6 +86,15 @@ export default class InputdWithSelect extends Vue {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  flex-basis: 20%;
+}
+.button_delete {
+  height: 45px;
+  margin-top: 14px;
+  /* border: 1px solid grey; */
+  border-radius: 10px;
+  border: 2px solid #c8d3db;
+  width: 100%;
 }
 .input-field::v-deep .input {
   padding-left: 110px;
