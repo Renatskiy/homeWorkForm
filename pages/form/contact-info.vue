@@ -8,8 +8,8 @@
         @input="emitEvent($event, input.id)"
         @deletePhoneItem="deletePhoneItem"
         :is="input.type"
-        v-for="(input, index) in formState.formFields"
-        :key="index"
+        v-for="input in formState.formFields"
+        :key="input.id"
         v-bind="input"
         :title="input.title"
         :disableDeleteButton="disableDeleteButton"
@@ -65,9 +65,6 @@ export default class ContactInfo extends Vue {
   @formModuleStore.Getter
   public availablePhoneTypes!: Array<string>
 
-  setInputTitle(type: string) {
-    this.inputTitle = type
-  }
   get disableDeleteButton() {
     const phones = this.formState.formFields.filter((item) => item.phone)
     return phones.length < 2

@@ -1,7 +1,11 @@
 <template>
   <FormWrapper>
     <h3>OverView</h3>
-    <div class="overview-block" v-for="(item, index) in formState.formFields">
+    <div
+      class="overview-block"
+      v-for="item in formState.formFields"
+      :key="item.id"
+    >
       <div class="overview-title font">{{ item.title }} :</div>
       <div class="overview-value font">{{ item.value }}</div>
     </div>
@@ -10,10 +14,16 @@
       <div class="overview-value font">{{ formState.membership }}</div>
     </div>
     <div class="overview-block edit-block">
-      <a @click="toggleModal" lass="overview-title font">Edit information :</a>
+      <a @click="toggleModal('start')" сlass="overview-title font"
+        >Edit information :</a
+      >
     </div>
 
-    <Modal v-show="showModal" @close="toggleModal" class="modal-block">
+    <Modal
+      v-show="showModal"
+      @close="toggleModal('doNotSave')"
+      class="modal-block"
+    >
       <div class="modal-content-wrapper">
         <div class="">
           <contactInfo :showCred="false" />
@@ -33,7 +43,7 @@
               />
             </div>
           </div>
-          <b-button @click="toggleModal" block variant variant="primary"
+          <b-button @click="toggleModal('save')" block variant variant="primary"
             >Save</b-button
           >
         </div>
@@ -61,9 +71,15 @@ export default class OverView extends Vue {
   @formModuleStore.State
   public formState!: FieldsInterface
 
+  @formModuleStore.Getter
+  public stateCopy!: any
+
   @formModuleStore.Mutation('CHANGE_MEMBERSHIP') CHANGE_MEMBERSHIP!: (
     type: string
   ) => void
+  @formModuleStore.Mutation('SAVE_GLOBAL_STATE') SAVE_GLOBAL_STATE!: () => void
+  @formModuleStore.Mutation('RETURN_STATE_VALUES')
+  RETURN_STATE_VALUES!: () => void
 
   showModal = false
 
@@ -71,7 +87,15 @@ export default class OverView extends Vue {
     return memberShips
   }
 
-  toggleModal() {
+  toggleModal(runType: string) {
+    if (runType === 'start') {
+      console.log('start')
+      this.SAVE_GLOBAL_STATE()
+    }
+    if (runType === 'doNotSave') {
+      console.log('doNotSave')
+      this.RETURN_STATE_VALUES()
+    }
     this.showModal = !this.showModal
   }
   changeMemberShip(title: string) {
@@ -120,6 +144,8 @@ export default class OverView extends Vue {
 }
 .memberShip {
   padding: 0 10px;
+  max-width: 490px;
+  margin: 0 auto;
 }
 .memberShip__wrapper {
   display: flex;

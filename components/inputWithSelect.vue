@@ -1,6 +1,5 @@
 <template>
   <div class="inputWrapper">
-    <!-- @input="$emit('input', { field: value, selector: innerSelectorValue })" -->
     <textInput
       class="input-field"
       :value="value"

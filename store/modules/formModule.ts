@@ -1,11 +1,10 @@
-import { TextField } from '../../Interfaces/formInterace'
 import { Module, VuexModule, Mutation } from 'vuex-module-decorators'
 import {
   FormFieldInterface,
   FormStateInterface,
 } from '../../Interfaces/FormStateInterface'
-const phoneTypes = ['Home', 'Work', 'Mobile', 'Any']
-
+const phoneTypes = ['Home', 'Work', 'Mobile', 'Any', 'Main']
+let jsonState = ''
 @Module({
   name: 'formModule',
   stateFactory: true,
@@ -85,6 +84,22 @@ export default class Form extends VuexModule {
   @Mutation
   CHANGE_MEMBERSHIP(type: string) {
     this.formState.membership = type
+  }
+
+  @Mutation
+  SAVE_GLOBAL_STATE(data: string) {
+    const copy = JSON.stringify(this.formState)
+    jsonState = copy
+  }
+  @Mutation
+  RETURN_STATE_VALUES(data: string) {
+    const copyedState = JSON.parse(jsonState)
+    this.formState = copyedState
+  }
+
+  get stateCopy(): string {
+    const copy = JSON.stringify(this.formState)
+    return copy
   }
 
   get availablePhoneTypes(): Array<string> {

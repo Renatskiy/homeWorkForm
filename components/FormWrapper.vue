@@ -1,6 +1,10 @@
 <template>
   <div>
-    <RoutingBlock :RoutePages="RoutePages" v-if="showCred" />
+    <RoutingBlock
+      :RoutePages="RoutePages"
+      v-if="showCred"
+      class="RoutindBlock"
+    />
     <div class="form_wrapper">
       <slot />
       <ButtonsBlock
@@ -70,7 +74,7 @@ export default class FormWrapper extends Vue {
     return AuthPages.map((page: AuthPagesInterface) => {
       return {
         ...page,
-        class: { active: page.routeName === this.$route.name },
+        class: { active: page.routeName === this.$route.name } || '',
       }
     })
   }
@@ -128,6 +132,7 @@ h3 {
   height: auto;
   box-shadow: 0px 3px 18px #00000029;
   background: #ffffff;
+  border-radius: 16px;
 }
 .routing_wrapper {
   display: flex;
@@ -142,11 +147,12 @@ h3 {
   width: 80px;
   height: 80px;
   /* UI Properties */
-  border: 2px solid grey;
+  border: 2px solid #c8d3db;
   border-radius: 50%;
   display: flex;
   align-content: center;
   align-items: center;
+  color: #c8d3db;
 }
 .active .roundedBlock__item {
   border: 2px solid #15b0fc;
@@ -170,5 +176,8 @@ h3 {
 }
 .modal-block {
   display: block;
+}
+.RoutindBlock {
+  margin-bottom: 80px;
 }
 </style>
