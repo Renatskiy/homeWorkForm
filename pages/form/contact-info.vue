@@ -9,6 +9,7 @@
         @deletePhoneItem="deletePhoneItem"
         :is="input.type"
         v-for="(input, index) in formState.formFields"
+        :key="index"
         v-bind="input"
         :title="input.title"
         :disableDeleteButton="disableDeleteButton"
@@ -49,7 +50,7 @@ export default class ContactInfo extends Vue {
   public formState!: FieldsInterface
 
   @formModuleStore.Mutation('SET_FIELD_VALUE') SET_FIELD_VALUE!: (payload: {
-    field: string[]
+    field: number
     value: string
   }) => void
   @formModuleStore.Mutation('SET_PHONE_SELECTOR')
@@ -62,7 +63,7 @@ export default class ContactInfo extends Vue {
   DELETE_PHONE_FIELD!: (id: number | string) => void
 
   @formModuleStore.Getter
-  public availablePhoneTypes: any
+  public availablePhoneTypes!: Array<string>
 
   setInputTitle(type: string) {
     this.inputTitle = type
@@ -94,7 +95,7 @@ export default class ContactInfo extends Vue {
   background: #ebebeb;
   opacity: 1;
 }
-.form-wrapper {
+.form_wrapper {
   margin: 0 auto;
   width: 490px;
   height: 718px;
@@ -103,5 +104,8 @@ export default class ContactInfo extends Vue {
 }
 .add-phone-btn:hover {
   text-decoration: none;
+}
+.add-phone-btn {
+  font: normal normal bold 18px/18px 'Open Sans';
 }
 </style>

@@ -22,3 +22,9 @@ export default class FormWrapper extends Vue {
   @Prop({ default: true }) RoutePages!: AuthPagesInterface[]
 }
 </script>
+
+<style scoped>
+.routing_wrapper {
+  padding: 20px 60px;
+}
+</style>

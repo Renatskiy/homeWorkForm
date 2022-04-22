@@ -32,6 +32,7 @@ export default class Field extends Vue {
 .title {
   color: #394556;
   margin-bottom: 10px;
+  font: normal normal bold 18px/18px 'Open Sans';
 }
 .input {
   outline: none;

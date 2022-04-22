@@ -1,7 +1,7 @@
 <template>
   <div>
     <RoutingBlock :RoutePages="RoutePages" v-if="showCred" />
-    <div class="form-wrapper">
+    <div class="form_wrapper">
       <slot />
       <ButtonsBlock
         @submit="submit"
@@ -49,12 +49,14 @@ export default class FormWrapper extends Vue {
     const item = AuthPages.find(
       (page: AuthPagesInterface) => page.routeName === this.$route.name
     )
-    if (action === 'forward') {
-      const step = item.index + 1
-      this.$router.push({ name: AuthPages[step].routeName })
-    } else {
-      const step = item.index - 1
-      this.$router.push({ name: AuthPages[step].routeName })
+    if (item) {
+      if (action === 'forward') {
+        const step = item.index + 1
+        this.$router.push({ name: AuthPages[step].routeName })
+      } else {
+        const step = item.index - 1
+        this.$router.push({ name: AuthPages[step].routeName })
+      }
     }
   }
   get CurrentPage() {
@@ -84,9 +86,9 @@ export default class FormWrapper extends Vue {
         JSON.stringify(this.formState),
         { headers }
       )
-      this.post = 'Congratulations your data was sended to the server!'
+      this.post = 'Thank you! Now we now all about you!)'
     } catch (e) {
-      this.post = 'Something went wrong('
+      this.post = 'Error. Check you network'
       console.log(e)
     }
   }
@@ -94,7 +96,7 @@ export default class FormWrapper extends Vue {
 </script>
 
 <style lang="css">
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;500;700&display=swap');
 
 body {
   font-family: 'Open Sans';
@@ -102,6 +104,7 @@ body {
 body a {
   color: #007bff;
   cursor: pointer;
+  font: normal normal bold 18px/18px 'Open Sans';
 }
 a:not([href]):not([class]) {
   color: #007bff;
@@ -111,12 +114,14 @@ a:hover {
 }
 h3 {
   color: #007bff;
+  font: normal normal bold 18px/18px 'Open Sans';
+  padding: 10px 0;
 }
 .container {
   background: #ebebeb;
   opacity: 1;
 }
-.form-wrapper {
+.form_wrapper {
   margin: 0 auto;
   padding: 32px;
   width: 490px;
@@ -149,6 +154,9 @@ h3 {
 }
 .roundedBlock__index {
   margin: 0 auto;
+  margin: 0 auto;
+  font-size: 48px;
+  font-weight: bold;
 }
 .buttons_wrapper {
   margin: 32px 0;
@@ -157,7 +165,7 @@ h3 {
   height: 64px;
   font-size: 28px;
 }
-.modal-content-wrapper .form-wrapper {
+.modal-content-wrapper .form_wrapper {
   padding: 0;
 }
 .modal-block {

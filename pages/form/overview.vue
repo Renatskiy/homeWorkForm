@@ -73,22 +73,26 @@ export default class OverView extends Vue {
 
   toggleModal() {
     this.showModal = !this.showModal
-    console.log(this.showModal)
   }
   changeMemberShip(title: string) {
-    console.log(title)
     this.CHANGE_MEMBERSHIP(title)
   }
 }
 </script>
 
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;500;700&display=swap');
+
 .overview-block {
   display: flex;
   padding: 16px 0;
+  align-items: center;
 }
 .overview-title {
   flex-basis: 40%;
+}
+.overview-title.font {
+  font: normal normal bold 18px/18px 'Open Sans';
 }
 .font {
   font-family: 'Open Sans';

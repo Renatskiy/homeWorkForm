@@ -1,7 +1,11 @@
 import { TextField } from '../../Interfaces/formInterace'
 import { Module, VuexModule, Mutation } from 'vuex-module-decorators'
-
-const phoneTypes = ['home', 'work', 'mobile', 'any']
+import {
+  FormFieldInterface,
+  FormStateInterface,
+} from '../../Interfaces/FormStateInterface'
+const phoneTypes = ['Home', 'Work', 'Mobile', 'Any']
+//TODO
 
 @Module({
   name: 'formModule',
@@ -9,30 +13,28 @@ const phoneTypes = ['home', 'work', 'mobile', 'any']
   namespaced: true,
 })
 export default class Form extends VuexModule {
-  public formState = {
+  public formState: FormStateInterface = {
     membership: 'Regular',
     formFields: [
       {
-        title: 'firstName',
+        title: 'First name',
         type: 'textInput',
         value: '',
         id: 4,
-        phoneType: false,
       },
       {
-        title: 'lastName',
+        title: 'Last name',
         type: 'textInput',
         value: '',
         id: 3,
-        phoneType: false,
       },
-      { title: 'email', type: 'textInput', value: '', id: 0, phoneType: false },
+      { title: 'E-mail', type: 'textInput', value: '', id: 0 },
       {
         phone: true,
         title: 'Phone',
         type: 'inputWithSelect',
         value: '',
-        phoneType: 'home',
+        phoneType: 'Home',
         id: 1,
       },
       {
@@ -40,7 +42,7 @@ export default class Form extends VuexModule {
         title: 'Phone',
         type: 'inputWithSelect',
         value: '',
-        phoneType: 'work',
+        phoneType: 'Work',
         text: 'phone',
         id: 2,
       },
@@ -51,23 +53,29 @@ export default class Form extends VuexModule {
     const item = this.formState.formFields.find(
       (x) => x.type === 'inputWithSelect'
     )
-    const copyField: typeof item = { ...item }
+    if (!item) {
+      return
+    }
+    const copyField: FormFieldInterface = { ...item }
     copyField.id = Math.floor(Math.random() * 100)
     copyField.phoneType = type
     copyField.value = ''
     this.formState.formFields.push(copyField)
   }
   @Mutation
-  SET_FIELD_VALUE(payload: { field: number; value: string }) {
+  SET_FIELD_VALUE(payload: { field: number | string[]; value: string }) {
     const { field, value } = payload
     let item = this.formState.formFields.find((x) => x.id === field)
-    item.value = value
+    if (item) {
+      item.value = value
+    }
   }
 
   @Mutation
-  SET_PHONE_SELECTOR(payload: { id: number; selector: any }) {
+  SET_PHONE_SELECTOR(payload: { id: number; selector: string }) {
     const { id, selector } = payload
     let item = this.formState.formFields.find((x) => x.id === id)
+    if (!item) return
     item.phoneType = selector
   }
   @Mutation
@@ -77,19 +85,17 @@ export default class Form extends VuexModule {
   }
   @Mutation
   CHANGE_MEMBERSHIP(type: string) {
-    console.log('CHANGE_MEMBERSHIP')
     this.formState.membership = type
   }
 
   get availablePhoneTypes(): Array<string> {
     const userPhoneTipes = this.formState.formFields
       .map((field) => {
-        if (field.phone) return field.phoneType
+        if (field.phone) return field.phoneType?.toLowerCase()
       })
       .filter(Boolean)
-    console.log(userPhoneTipes)
     return phoneTypes.filter((type) => {
-      return !userPhoneTipes.includes(type)
+      return !userPhoneTipes.includes(type.toLowerCase())
     })
   }
 }

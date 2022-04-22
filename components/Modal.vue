@@ -38,7 +38,7 @@ export default class FormWrapper extends Vue {}
   width: 50%;
 }
 
-.modal-content .form-wrapper {
+.modal-content .form_wrapper {
   box-shadow: none;
 }
 /* The Close Button */

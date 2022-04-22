@@ -52,7 +52,7 @@ export default class FormWrapper extends Vue {
   height: 64px;
   font-size: 28px;
 }
-.modal-content-wrapper .form-wrapper {
+.modal-content-wrapper .form_wrapper {
   padding: 0;
 }
 </style>

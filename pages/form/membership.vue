@@ -37,7 +37,6 @@ export default class MemberShip extends Vue {
   ) => void
 
   changeMemberShip(title: string) {
-    console.log(title)
     this.CHANGE_MEMBERSHIP(title)
   }
 
@@ -54,6 +53,6 @@ export default class MemberShip extends Vue {
 <style scoped>
 .memberShip__wrapper {
   margin: 0 auto;
-  padding: 0 32px;
+  /* padding: 20px 0; */
 }
 </style>

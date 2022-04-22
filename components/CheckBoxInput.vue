@@ -1,7 +1,7 @@
 <template>
   <div class="checkbox_wrapper">
     <input
-      type="checkbox"
+      type="radio"
       :checked="checked"
       class="checkbox"
       @change="$emit('change', title)"
@@ -39,16 +39,18 @@ export default class InputdWithSelect extends Vue {
   height: 32px;
   border-radius: 8px;
   border: 2px solid #c8d3db;
+  cursor: pointer;
 }
 .checkbox:checked {
   color: red;
 }
 .title {
-  font: normal normal normal 18px/24px;
+  font: normal normal normal 18px/24px 'Open Sans';
   color: #394556;
   margin-left: 20px;
   display: inline-block;
   margin-bottom: 0;
+  cursor: pointer;
 }
 .title::first-letter {
   text-transform: uppercase;

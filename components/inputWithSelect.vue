@@ -21,7 +21,9 @@
         >
           {{ item }}
         </option>
-        <option :value="innerSelectorValue">{{ selectValue }}</option>
+        <option class="current_value" :value="innerSelectorValue">
+          {{ selectValue }}
+        </option>
       </select>
     </textInput>
     <div class="button_wrapper" v-if="showCred">
@@ -76,6 +78,7 @@ export default class InputdWithSelect extends Vue {
   box-sizing: border-box;
   font-size: normal;
   color: #394556;
+  font: normal normal bold 18px/18px 'Open Sans';
 }
 .inputWrapper {
   display: flex;
@@ -95,6 +98,7 @@ export default class InputdWithSelect extends Vue {
   border-radius: 10px;
   border: 2px solid #c8d3db;
   width: 100%;
+  font: normal normal bold 18px/18px 'Open Sans';
 }
 .input-field::v-deep .input {
   padding-left: 110px;
