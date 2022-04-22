@@ -5,7 +5,6 @@ import {
   FormStateInterface,
 } from '../../Interfaces/FormStateInterface'
 const phoneTypes = ['Home', 'Work', 'Mobile', 'Any']
-//TODO
 
 @Module({
   name: 'formModule',
