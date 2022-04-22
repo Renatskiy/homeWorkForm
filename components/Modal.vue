@@ -18,18 +18,17 @@ export default class FormWrapper extends Vue {}
 <style>
 .modal {
   border-radius: 8px;
-  position: fixed; /* Stay in place */
-  z-index: 255; /* Sit on top */
-  padding-top: 100px; /* Location of the box */
+  position: fixed;
+  z-index: 255;
+  padding-top: 100px;
   left: 0;
   top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0, 0, 0); /* Fallback color */
-  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0, 0, 0);
+  background-color: rgba(0, 0, 0, 0.4);
 }
-/* Modal Content */
 .modal-content {
   background-color: #fefefe;
   margin: auto;
@@ -41,7 +40,6 @@ export default class FormWrapper extends Vue {}
 .modal-content .form_wrapper {
   box-shadow: none;
 }
-/* The Close Button */
 .close {
   color: #aaaaaa;
   float: right;
