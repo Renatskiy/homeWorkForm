@@ -1,12 +1,13 @@
 <template>
-  <div>
+  <div class="checkbox_wrapper">
     <input
       type="checkbox"
       :checked="checked"
       class="checkbox"
       @change="$emit('change', title)"
+      :id="`${index}_checkbox_id`"
     />
-    <label class="title">{{ title }}</label>
+    <label :for="`${index}_checkbox_id`" class="title">{{ title }}</label>
   </div>
 </template>
 
@@ -16,14 +17,16 @@ import { Component, Vue, Prop } from 'vue-property-decorator'
 export default class InputdWithSelect extends Vue {
   @Prop({ default: false }) checked!: boolean
   @Prop({ default: '' }) title!: string
+  @Prop({ default: 0 }) index!: number
 }
 </script>
 <style scoped>
-input[type='radio'],
-input[type='checkbox'] {
-  color: red;
+.checkbox_wrapper {
+  display: flex;
+  align-items: center;
+  margin: 10px 0;
+  align-content: center;
 }
-
 .checkbox-wraper {
   display: flex;
   justify-content: flex-start;
@@ -45,6 +48,7 @@ input[type='checkbox'] {
   color: #394556;
   margin-left: 20px;
   display: inline-block;
+  margin-bottom: 0;
 }
 .title::first-letter {
   text-transform: uppercase;

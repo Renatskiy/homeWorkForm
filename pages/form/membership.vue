@@ -2,12 +2,12 @@
   <FormWrapper>
     <div class="memberShip__wrapper">
       <h3>MemberShip</h3>
-      {{ formState.membership }}
       <div v-for="(item, index) in memberShipsArray">
         <ChekboxInput
           @change="changeMemberShip"
           :checked="formState.membership === item.type"
           :title="item.type"
+          :index="index"
         />
       </div>
       <div>{{ description.description }}</div>
@@ -50,3 +50,10 @@ export default class MemberShip extends Vue {
   }
 }
 </script>
+
+<style scoped>
+.memberShip__wrapper {
+  margin: 0 auto;
+  padding: 0 32px;
+}
+</style>

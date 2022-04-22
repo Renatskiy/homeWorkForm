@@ -18,10 +18,25 @@
         <div class="">
           <contactInfo :showCred="false" />
         </div>
-        <!-- <div class="">
-          <p class="section-title">Membership</p>
-          <membership-fields />
-        </div> -->
+        <div class="memberShip">
+          <h3>MemberShip</h3>
+          <div class="memberShip__wrapper">
+            <div
+              v-for="(item, index) in memberShipsArray"
+              class="memberShip_item"
+            >
+              <ChekboxInput
+                @change="changeMemberShip"
+                :checked="formState.membership === item.type"
+                :title="item.type"
+                :index="index"
+              />
+            </div>
+          </div>
+          <b-button @click="toggleModal" block variant variant="primary"
+            >Save</b-button
+          >
+        </div>
       </div>
     </Modal>
   </FormWrapper>
@@ -32,6 +47,7 @@ import FormWrapper from '../../components/FormWrapper.vue'
 import { Component, Vue } from 'vue-property-decorator'
 import { FieldsInterface } from '../../Interfaces/formInterace'
 import ChekboxInput from '../../components/CheckBoxInput.vue'
+import { memberShips } from '../../constants/memberships'
 import contactInfo from './contact-info.vue'
 import { namespace } from 'vuex-class'
 import Modal from '../../components/Modal.vue'
@@ -44,19 +60,29 @@ const formModuleStore = namespace('modules/formModule')
 export default class OverView extends Vue {
   @formModuleStore.State
   public formState!: FieldsInterface
+
+  @formModuleStore.Mutation('CHANGE_MEMBERSHIP') CHANGE_MEMBERSHIP!: (
+    type: string
+  ) => void
+
   showModal = false
+
+  get memberShipsArray() {
+    return memberShips
+  }
 
   toggleModal() {
     this.showModal = !this.showModal
     console.log(this.showModal)
   }
+  changeMemberShip(title: string) {
+    console.log(title)
+    this.CHANGE_MEMBERSHIP(title)
+  }
 }
 </script>
 
 <style scoped>
-.modal-block {
-  display: block;
-}
 .overview-block {
   display: flex;
   padding: 16px 0;
@@ -81,18 +107,20 @@ export default class OverView extends Vue {
   margin: 0;
   padding-bottom: 31px;
 }
-.modal-content-wrapper {
-  /* display: flex;
-  flex-direction: row;
-  justify-content: space-between; */
-}
-/* .container {
-  max-width: 50%;
-} */
+
 .section-title {
   font: normal normal bold 34px/45px Roboto;
   color: #15b0fc;
   margin: 0;
   padding-bottom: 35px;
+}
+.memberShip {
+  padding: 0 10px;
+}
+.memberShip__wrapper {
+  display: flex;
+}
+.memberShip_item {
+  margin-right: 30px;
 }
 </style>

@@ -1,38 +1,20 @@
 <template>
-  <div class="FormWrapper">
-    <nav class="routing_wrapper" v-if="showCred">
-      <div
-        :class="route.class"
-        v-for="(route, index) in RoutePages"
-        :key="index"
-      >
-        <div class="roundedBlock__item">
-          <div class="roundedBlock__index">
-            {{ index + 1 }}
-          </div>
-        </div>
-        <div>{{ route.text }}</div>
-      </div>
-    </nav>
+  <div>
+    <RoutingBlock :RoutePages="RoutePages" v-if="showCred" />
     <div class="form-wrapper">
       <slot />
-      <b-button
-        v-if="CurrentPage.index !== 2 && showCred"
-        @click="changeRoute('forward')"
-        block
-        variant
-        variant="outline-primary"
-        >Continue</b-button
-      >
-      <b-button
-        v-if="CurrentPage.index !== 0 && showCred"
-        @click="changeRoute()"
-        block
-        variant
-        variant="outline-primary"
-        >Back</b-button
-      >
+      <ButtonsBlock
+        @submit="submit"
+        @changeRoute="changeRoute"
+        :showCred="showCred"
+        :CurrentPage="CurrentPage"
+      />
     </div>
+    <Modal v-if="post" @close="post = ''" class="modal-block">
+      <p class="message">
+        {{ post }}
+      </p>
+    </Modal>
   </div>
 </template>
 
@@ -41,17 +23,32 @@ import { Component, Vue, Prop } from 'vue-property-decorator'
 import { AuthPages } from '../constants/AuthPages'
 import { namespace } from 'vuex-class'
 import { FieldsInterface } from '../Interfaces/formInterace'
+import { AuthPagesInterface } from '../Interfaces/AuthPagesInterface'
+import RoutingBlock from './RoutingBlock.vue'
+import ButtonsBlock from './Buttons.vue'
+import Modal from '../components/Modal.vue'
+import axios from 'axios'
 
 const formModuleStore = namespace('modules/formModule')
-@Component
+@Component({
+  components: {
+    RoutingBlock,
+    ButtonsBlock,
+    Modal,
+  },
+})
 export default class FormWrapper extends Vue {
   @Prop({ default: true }) showCred!: boolean
 
   @formModuleStore.State
   public formState!: FieldsInterface
 
-  changeRoute(action: string) {
-    const item = AuthPages.find((page) => page.routeName === this.$route.name)
+  public post: string = ''
+
+  changeRoute(action: string = 'back') {
+    const item = AuthPages.find(
+      (page: AuthPagesInterface) => page.routeName === this.$route.name
+    )
     if (action === 'forward') {
       const step = item.index + 1
       this.$router.push({ name: AuthPages[step].routeName })
@@ -61,17 +58,37 @@ export default class FormWrapper extends Vue {
     }
   }
   get CurrentPage() {
-    const item = AuthPages.find((page) => page.routeName === this.$route.name)
+    const item = AuthPages.find(
+      (page: AuthPagesInterface) => page.routeName === this.$route.name
+    )
     return item
   }
 
   get RoutePages() {
-    return AuthPages.map((page) => {
+    return AuthPages.map((page: AuthPagesInterface) => {
       return {
         ...page,
         class: { active: page.routeName === this.$route.name },
       }
     })
+  }
+
+  async submit(): Promise<any> {
+    const headers = {
+      'Content-Type': 'application/json',
+      charset: 'utf-8',
+    }
+    try {
+      await axios.post(
+        'https://jsonplaceholder.typicode.com/posts',
+        JSON.stringify(this.formState),
+        { headers }
+      )
+      this.post = 'Congratulations your data was sended to the server!'
+    } catch (e) {
+      this.post = 'Something went wrong('
+      console.log(e)
+    }
   }
 }
 </script>
@@ -132,5 +149,18 @@ h3 {
 }
 .roundedBlock__index {
   margin: 0 auto;
+}
+.buttons_wrapper {
+  margin: 32px 0;
+}
+.btn-primary {
+  height: 64px;
+  font-size: 28px;
+}
+.modal-content-wrapper .form-wrapper {
+  padding: 0;
+}
+.modal-block {
+  display: block;
 }
 </style>
