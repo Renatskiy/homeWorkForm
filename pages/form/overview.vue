@@ -89,11 +89,9 @@ export default class OverView extends Vue {
 
   toggleModal(runType: string) {
     if (runType === 'start') {
-      console.log('start')
       this.SAVE_GLOBAL_STATE()
     }
     if (runType === 'doNotSave') {
-      console.log('doNotSave')
       this.RETURN_STATE_VALUES()
     }
     this.showModal = !this.showModal
